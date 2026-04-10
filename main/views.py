@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView ,TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Personal, Contact_address, Emergency_contact, Course, Assessment
 from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, CourseForm, AssessmentForm
 
@@ -17,7 +18,7 @@ class LoginView(LoginView):
     template_name = 'login.html'
     success_url = '/home/'
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin,TemplateView):
     template_name = 'home.html'
 
 class PersonalView(CreateView):
