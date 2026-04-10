@@ -21,7 +21,7 @@ class LoginView(LoginView):
 @method_decorator(login_required(login_url='/logins/'), name='dispatch')
 class HomeView(TemplateView):
     template_name = 'main/home.html'
-@method_decorator(login_required(login_url='/logins/'), name='dispatch')
+
 class PersonalView(CreateView):
     form_class = PersonalForm
     template_name = 'main/personal.html'
@@ -33,7 +33,7 @@ class PersonalView(CreateView):
 
 class ContactAddressView(CreateView):
     form_class = ContactAddressForm
-    template_name = 'contact_address.html'
+    template_name = 'main/contact_address.html'
     success_url = '/home/'
     def form_valid(self, form):
         Contact_address = form.save(commit = False)
@@ -42,7 +42,7 @@ class ContactAddressView(CreateView):
 
 class EmergencyContactView(CreateView):
     form_class = EmergencyContactForm
-    template_name = 'emergency_contact.html'
+    template_name = 'main/emergency_contact.html'
     success_url = '/home/'
     def form_invalid(self, form):
         emergence_contact = form.save(commit=False)
