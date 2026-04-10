@@ -4,6 +4,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView 
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
+from .models import Personal, Contact_address, Emergency_contact, Course, Assessment
+from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, CourseForm, AssessmentForm
+
 # Create your views here.
 class RegisterView(CreateView):
     form_class = UserCreationForm
