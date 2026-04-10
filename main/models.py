@@ -1,3 +1,61 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
+class Personal(models.Model):
+    Choice_region  = (
+        ('Afar','Afar'),
+        ('Amhara','Amhara'),
+        ('Beneshangul','Beneshangul'),
+        ('Oromia','Oromia'),
+        ('Somali','Somali'),
+        ('Harari','Harari'),
+        ('Tigray','Tigray'),
+        ('Gambela','Gambela'),
+        ('Sidama','Sidama'),
+        ('SNNPR','SNNPR'),
+        ('Addis Ababa','Addis Ababa'),
+        ('Dire Dawa','Dire Dawa'),
+    )
+    profile_picture = models.ImageField(upload_to = 'photos/')
+    name = models.CharField(max_length=200)
+    father_name = models.CharField(max_length=200)
+    grandfather_name = models.CharField(max_length=200)
+    gender = models.CharField(max_length=200)
+    disability = models.CharField(max_length=200)
+    date_of_birth = models.DateField()
+    place_of_birth = models.CharField(max_length=200)
+    nationality = models.CharField(max_length=200)
+    region = models.CharField(max_length=200 , choices=Choice_region)
+    marital_status = models.CharField(max_length=200)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+class Contact_address(models.Model):
+    mobile = models.CharField(max_length=200)
+    email = models.EmailField(max_length=200)
+    zone = models.CharField(max_length=200)
+    woreda = models.CharField(max_length=200)
+    city = models.CharField(max_length=200)
+    kebele = models.CharField(max_length=200)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+class Emergency_contact(models.Model):
+    Full_name = models.CharField(max_length=200)
+    relationship = models.CharField(max_length=200)
+    mobile = models.CharField(max_length=200)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+
+class Course(models.Model):
+    course_name = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Assessment(models.Model):
+    quiz1 = models.IntegerField(default=0)
+    quiz2 = models.IntegerField(default=0)
+    assignment1 = models.IntegerField(default=0)
+    assignment2 = models.IntegerField(default=0)
+    mid_exam = models.IntegerField(default=0)
+    final_exam = models.IntegerField(default=0)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
