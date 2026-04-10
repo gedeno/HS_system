@@ -4,26 +4,27 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView ,TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .models import Personal, Contact_address, Emergency_contact, Course, Assessment
 from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, CourseForm, AssessmentForm
 
 # Create your views here.
 class RegisterView(CreateView):
     form_class = UserCreationForm
-    template_name = 'register.html'
-    success_url = '/login/'
+    template_name = 'main/register.html'
+    success_url = '/logins/'
 
 class LoginView(LoginView):
-    template_name = 'login.html'
+    template_name = 'main/login.html'
     success_url = '/home/'
-
-class HomeView(LoginRequiredMixin,TemplateView):
-    template_name = 'home.html'
-
+@method_decorator(login_required(login_url='/logins/'), name='dispatch')
+class HomeView(TemplateView):
+    template_name = 'main/home.html'
+@method_decorator(login_required(login_url='/logins/'), name='dispatch')
 class PersonalView(CreateView):
     form_class = PersonalForm
-    template_name = 'personal.html'
+    template_name = 'main/personal.html'
     success_url = '/home/'
     def form_valid(self, form):
         personal = form.save(commit=False)
