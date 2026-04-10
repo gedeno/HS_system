@@ -22,7 +22,7 @@ class Personal(models.Model):
     grandfather_name = models.CharField(max_length=200)
     gender = models.CharField(max_length=200)
     disability = models.CharField(max_length=200)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateTimeField()
     place_of_birth = models.CharField(max_length=200)
     nationality = models.CharField(max_length=200)
     region = models.CharField(max_length=200 , choices=Choice_region)
