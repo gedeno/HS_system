@@ -30,6 +30,7 @@ class PersonalView(CreateView):
         personal = form.save(commit=False)
         personal.user = self.request.user
         personal.save()
+        return redirect('home')
 
 class ContactAddressView(CreateView):
     form_class = ContactAddressForm
@@ -39,6 +40,7 @@ class ContactAddressView(CreateView):
         Contact_address = form.save(commit = False)
         Contact_address.user = self.request.user
         Contact_address.save()
+        return redirect('home')
 
 class EmergencyContactView(CreateView):
     form_class = EmergencyContactForm
@@ -48,3 +50,4 @@ class EmergencyContactView(CreateView):
         emergence_contact = form.save(commit=False)
         emergence_contact.user = self.request.user
         emergence_contact.save()
+        return redirect('home')
