@@ -43,11 +43,10 @@ class ContactAddressView(CreateView):
         return redirect('home')
 
 class EmergencyContactView(CreateView):
+    model = Emergency_contact
     form_class = EmergencyContactForm
     template_name = 'main/emergency_contact.html'
-    success_url = '/home/'
-    def form_invalid(self, form):
-        emergence_contact = form.save(commit=False)
-        emergence_contact.user = self.request.user
-        emergence_contact.save()
-        return redirect('home')
+    success_url = '/'
+    def form_valid(self, form):
+        form.instance.user = self.request.user # Link the user here
+        return super().form_valid(form)
