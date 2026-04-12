@@ -57,5 +57,5 @@ class Assessment(models.Model):
     assignment2 = models.IntegerField(default=0)
     mid_exam = models.IntegerField(default=0)
     final_exam = models.IntegerField(default=0)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.OneToOneField(Course, on_delete=models.CASCADE)
+   

@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import CreateView ,TemplateView
+from django.views.generic import CreateView ,TemplateView, ListView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -24,6 +24,8 @@ def login_view(request):
         if user != None:
             login(request,user)
             if request.user.is_superuser:
+                return redirect('teachers')
+            else:
                 return redirect('home')
     return render(request, 'main/login.html')
 
@@ -58,8 +60,26 @@ class EmergencyContactView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user # Link the user here
         return super().form_valid(form)
-class TeachersView(TemplateView):
+class TeachersView(ListView):
+    context_object_name = 'students'
     template_name = 'main/teachers.html'
+    def get_queryset(self):
+        return User.objects.filter(is_superuser=False)
+
+class Add_CourseView(CreateView):
+    model = Course
+    form_class = CourseForm
+    success_url = 'teachers'
+    template_name = 'main/add_course.html'
+
+    def form_valid(self, form):
+        course = form.save(commit=False)
+        course.user = self.request.user
+        course.save()
+        ass = Assessment(course=course)
+        ass.save()
+
+        return redirect('teachers')
 
 def logout_view(request):
     logout(request)
