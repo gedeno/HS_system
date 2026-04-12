@@ -27,6 +27,9 @@ def login_view(request):
                 return redirect('home')
     return render(request, 'main/login.html')
 
+class HomeView(TemplateView):
+    template_name = 'main/home.html'
+
 class PersonalView(CreateView):
     form_class = PersonalForm
     template_name = 'main/personal.html'
@@ -58,5 +61,6 @@ class EmergencyContactView(CreateView):
 class TeachersView(TemplateView):
     template_name = 'main/teachers.html'
 
-class logout_view(logout):
-    next_page = 'logins'
+def logout_view(request):
+    logout(request)
+    return redirect('logins')
