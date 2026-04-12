@@ -55,3 +55,8 @@ class EmergencyContactView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user # Link the user here
         return super().form_valid(form)
+class TeachersView(TemplateView):
+    template_name = 'main/teachers.html'
+
+class logout_view(logout):
+    next_page = 'logins'
