@@ -15,12 +15,17 @@ class RegisterView(CreateView):
     template_name = 'main/register.html'
     success_url = '/logins/'
 
-class LoginView(LoginView):
-    template_name = 'main/login.html'
-    success_url = '/home/'
-@method_decorator(login_required(login_url='/logins/'), name='dispatch')
-class HomeView(TemplateView):
-    template_name = 'main/home.html'
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request,username=username,password=password)
+        
+        if user != None:
+            login(request,user)
+            if request.user.is_superuser:
+                return redirect('home')
+    return render(request, 'main/login.html')
 
 class PersonalView(CreateView):
     form_class = PersonalForm

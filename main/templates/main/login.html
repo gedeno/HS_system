@@ -9,7 +9,10 @@
     <h1 style="text-align: center;">well come to login page </h1>
     <form action="" method="post">
         {% csrf_token %}
-        {{form.as_p}}
+        <label for="">username:</label>
+        <input type="text" name="username" id="" placeholder="username"><br>
+        <label for="">password:</label>
+        <input type="password" name="password" id="" placeholder="password"><br>
         <button type="submit">login</button><br>
         <a href="{% url 'register' %}"> go to register page </a>
     </form>
