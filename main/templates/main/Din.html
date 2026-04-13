@@ -13,6 +13,8 @@
         <hr>
             <a href="{% url 'add_course' student.id %}">{{ student.username}}</a><hr>
         {% endfor %}
+        <a href="{% url 'logout' %}">logout</a>
     </form>
+    
 </body>
 </html>
