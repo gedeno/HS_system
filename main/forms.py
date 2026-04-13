@@ -65,7 +65,8 @@ class CourseForm(ModelForm):
     class Meta:
         model = Course
         fields = '__all__'
-        exclude = ['user']
+        exclude = ['student', 'teacher']
+
 class AssessmentForm(ModelForm):
     class Meta:
         model = Assessment

@@ -11,7 +11,7 @@
         <a href="{% url 'logout' %}">logout</a>
         {% for student in students %}
         <hr>
-            <a href="{% url 'add_course' student.id %}">{{ student.username}}</a><hr>
+            <a href="{% url 'assessment' student.id %}">{{ student.username}}</a><hr>
         {% endfor %}
     </form>
 </body>

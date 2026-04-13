@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import CreateView ,TemplateView, ListView
+from django.views.generic import CreateView ,TemplateView, ListView ,DetailView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -31,7 +31,7 @@ def login_view(request):
             if request.user.is_superuser:
                 return redirect('Din')
             elif request.user.is_teacher:
-                return redirect('Din')
+                return redirect('teachers')
             else:
                 return redirect('home')
     return render(request, 'main/login.html')
@@ -42,6 +42,24 @@ class teachers(ListView):
     model = CustomUserModel
     context_object_name = 'students'
     template_name = 'main/teachers.html'
+
+    def get_queryset(self):
+        course = Course.objects.get(teacher=self.request.user)
+        return course.student.all()
+class AssessmentsView(UpdateView):
+    model = Assessment
+    form_class = AssessmentForm
+    context_object_name = 'assessment'
+    template_name = 'main/assessment.html'
+    success_url = 'teachers'
+    
+    def form_valid(self, form):
+        form.save()
+
+    def get_queryset(self):
+        course = Course.objects.get(teacher=self.request.user)
+        student = CustomUserModel.objects.get(id=self.kwargs['pk'])
+        return Assessment.objects.get(course=course, student=student)
 
 class PersonalView(CreateView):
     form_class = PersonalForm
@@ -72,10 +90,11 @@ class EmergencyContactView(CreateView):
         form.instance.user = self.request.user # Link the user here
         return super().form_valid(form)
 class DinView(ListView):
+    model = CustomUserModel
     context_object_name = 'students'
     template_name = 'main/Din.html'
     def get_queryset(self):
-        return User.objects.filter(is_superuser=False)
+        return CustomUserModel.objects.filter(is_superuser=False)
 
 class Add_CourseView(CreateView):
     model = Course
@@ -83,7 +102,8 @@ class Add_CourseView(CreateView):
     template_name = 'main/add_course.html'
     def form_valid(self, form):
         course = form.save(commit=False)
-        course.user = self.request.user
+        course.teacher = CustomUserModel.objects.get(subject=course.course_name)
+        course.student = CustomUserModel.objects.get(id=self.kwargs['pk'])
         course.save()
         ass = Assessment(course=course)
         ass.save()

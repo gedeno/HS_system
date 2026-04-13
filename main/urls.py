@@ -3,7 +3,7 @@ from .views import (RegisterView ,logout_view,HomeView,PersonalView,
                     ContactAddressView,EmergencyContactView ,
                     DinView, login_view,Add_CourseView,
                     TeacherRegisterView,
-                    teachers)
+                    teachers,AssessmentsView)
 
 urlpatterns = [
     path('register/',RegisterView.as_view() , name='register'),
@@ -16,6 +16,8 @@ urlpatterns = [
     path('Din/', DinView.as_view() ,name= 'Din'),
     path('add_course/<int:pk>/', Add_CourseView.as_view(), name='add_course'),   
     path('logout/',logout_view,name='logout'),
+    path('teachers/',teachers.as_view(), name='teachers'),
+    path('assessment/<int:pk>/', AssessmentsView.as_view(), name='assessment'),
 
 
 ]
