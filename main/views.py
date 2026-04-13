@@ -6,13 +6,18 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import Personal, Contact_address, Emergency_contact, Course, Assessment
-from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, CourseForm, AssessmentForm
+from .models import Personal, Contact_address, Emergency_contact, Course, Assessment ,CustomUserModel
+from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, CourseForm, AssessmentForm, TeacherCreationForm,StudentCreationForm
 
 # Create your views here.
 class RegisterView(CreateView):
-    form_class = UserCreationForm
+    form_class = StudentCreationForm
     template_name = 'main/register.html'
+    success_url = '/logins/'
+
+class TeacherRegisterView(CreateView):
+    form_class = TeacherCreationForm
+    template_name = 'main/teacher_register.html'
     success_url = '/logins/'
 
 def login_view(request):
@@ -24,13 +29,19 @@ def login_view(request):
         if user != None:
             login(request,user)
             if request.user.is_superuser:
-                return redirect('teachers')
+                return redirect('Din')
+            elif request.user.is_teacher:
+                return redirect('Din')
             else:
                 return redirect('home')
     return render(request, 'main/login.html')
-
+@method_decorator(login_required(login_url='/logins/'), name='dispatch')
 class HomeView(TemplateView):
     template_name = 'main/home.html'
+class teachers(ListView):
+    model = CustomUserModel
+    context_object_name = 'students'
+    template_name = 'main/teachers.html'
 
 class PersonalView(CreateView):
     form_class = PersonalForm
@@ -60,26 +71,23 @@ class EmergencyContactView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user # Link the user here
         return super().form_valid(form)
-class TeachersView(ListView):
+class DinView(ListView):
     context_object_name = 'students'
-    template_name = 'main/teachers.html'
+    template_name = 'main/Din.html'
     def get_queryset(self):
         return User.objects.filter(is_superuser=False)
 
 class Add_CourseView(CreateView):
     model = Course
     form_class = CourseForm
-    success_url = 'teachers'
     template_name = 'main/add_course.html'
-
     def form_valid(self, form):
         course = form.save(commit=False)
         course.user = self.request.user
         course.save()
         ass = Assessment(course=course)
         ass.save()
-
-        return redirect('teachers')
+        return redirect('Din')
 
 def logout_view(request):
     logout(request)

@@ -1,6 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import User
-# Create your models here.
+from django.contrib.auth.models import AbstractUser,User, AbstractBaseUser
+
+class CustomUserModel(AbstractUser):
+    subject = models.CharField(max_length=40, blank=True, null=True)
+    is_teacher = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'username'
+
 class Personal(models.Model):
     Choice_region  = (
         ('Afar','Afar'),
@@ -27,7 +34,7 @@ class Personal(models.Model):
     nationality = models.CharField(max_length=200)
     region = models.CharField(max_length=200 , choices=Choice_region)
     marital_status = models.CharField(max_length=200)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE)
 
 class Contact_address(models.Model):
     mobile = models.CharField(max_length=200)
@@ -36,18 +43,20 @@ class Contact_address(models.Model):
     woreda = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
     kebele = models.CharField(max_length=200)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE)
 
 class Emergency_contact(models.Model):
     Full_name = models.CharField(max_length=200)
     relationship = models.CharField(max_length=200)
     mobile = models.CharField(max_length=200)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE)
 
 
 class Course(models.Model):
     course_name = models.CharField(max_length=200)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)
+    student = models.ManyToManyField(CustomUserModel, on_delete=models.CASCADE)
+
 
 
 class Assessment(models.Model):
