@@ -103,9 +103,9 @@ class Add_CourseView(CreateView):
     def form_valid(self, form):
         course = form.save(commit=False)
         course.teacher = CustomUserModel.objects.get(subject=course.course_name)
-        course.student = CustomUserModel.objects.get(id=self.kwargs['pk'])
         course.save()
-        ass = Assessment(course=course)
+        course.student.add(CustomUserModel.objects.get(id=self.kwargs['pk']))
+        ass = Assessment(course=course, student=CustomUserModel.objects.get(id=self.kwargs['pk']))
         ass.save()
         return redirect('Din')
 
