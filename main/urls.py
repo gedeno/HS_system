@@ -3,7 +3,8 @@ from .views import (RegisterView ,logout_view,HomeView,PersonalView,
                     ContactAddressView,EmergencyContactView ,
                     DinView, login_view,Add_CourseView,
                     TeacherRegisterView,
-                    teachers,AssessmentsView)
+                    teachers,AssessmentsView
+                    )
 
 urlpatterns = [
     path('register/',RegisterView.as_view() , name='register'),

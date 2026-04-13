@@ -55,12 +55,13 @@ class AssessmentsView(UpdateView):
     
     def form_valid(self, form):
         form.save()
-        return super().form_valid(form)
-
-    def get_queryset(self):
+        return redirect('teachers')
+    def get_object(self, queryset = ...):
         course = Course.objects.get(teacher=self.request.user)
         student = CustomUserModel.objects.get(id=self.kwargs['pk'])
-        return Assessment.objects.filter(course=course, student=student)
+        ass = Assessment.objects.get(course=course, student=student)
+        return ass
+
 
 class PersonalView(CreateView):
     form_class = PersonalForm
