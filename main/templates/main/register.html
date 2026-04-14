@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .form{ 
+            width: 500px;
+            height: 300px;
+            background: rgb(15, 72, 100);
+            border-radius: 5%;
+            padding: 20px;
+            margin: 400px;
+        }
+     
+    </style>
 </head>
 <body>
     <h1 style="text-align: center;">well come to register page </h1>
-    <form action="" method="post">
+    <form action="" method="post" class="form">
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">register</button>

@@ -29,6 +29,20 @@ class StudentCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+    widgets = {
+        'username': forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Username'
+            }),
+        'password1': forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder':'password'
+        }),
+        'password2': forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder':'confirm password'
+        })
+    }
 class StudentCreationForm(UserCreationForm):
     class Meta:
         model = CustomUserModel

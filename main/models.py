@@ -61,14 +61,10 @@ class Emergency_contact(models.Model):
     mobile = models.CharField(max_length=200)
     user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE, related_name='emergency_contact')
 
-
-
 class Course(models.Model):
     course_name = models.CharField(max_length=200, choices=COURSE_CHOICES)
     teacher = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE , related_name='courses')
     student = models.ManyToManyField(CustomUserModel)
-
-
 
 class Assessment(models.Model):
     quiz1 = models.IntegerField(default=0)
