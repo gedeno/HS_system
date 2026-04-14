@@ -8,8 +8,9 @@
 <body>
     <h1>Subjects list </h1>
     {% for course in courses %}
-        <h3>{{ course.course}}</h3>
+        <a href="{% url 'assessment_list' course.id %}">{{ course.course}}</a>
     {% endfor %}
+    <a href="{% url 'home' %}">back to home</a>
     
 </body>
 </html>

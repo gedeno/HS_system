@@ -41,9 +41,16 @@ class HomeView(TemplateView):
 class Course_listVIew(ListView):
     model = Course
     context_object_name = 'courses'
-    template_name = 'main/subjects_list.html'
+    template_name = 'main/student_subjects_list.html'
     def get_queryset(self):
         return Course.objects.filter(student = self.request.user)
+class AssessmentListView(ListView):
+    model = Assessment
+    context_object_name = 'assessments'
+    template_name = 'main/student_assessments_list.html'
+    def get_queryset(self):
+        coursE = Course.objects.filter(student = self.request.user , id = self.kwargs['pk'])
+        return Assessment.objects.filter(course = coursE)
     
 
 class teachers(ListView):

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Student Assessments</h1>
+    {% for assessment in assessments %}
+        <h3>{{ assessment.quiz1}}</h3>
+        <h3>{{assessment.quiz2}}</h3>
+        <h3>{{assessment.assignment1}}</h3>
+        <h3>{{assessment.assignment2}}</h3>
+        <h3>{{assessment.mid_exam}}</h3>
+        <h3>{{assessment.final_exam}}</h3>
+        {% endfor %}
+    <a href="{% url 'course_list' %}">back to subjects list</a>    
+</body>
+</html>

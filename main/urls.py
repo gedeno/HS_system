@@ -4,7 +4,8 @@ from .views import (RegisterView ,logout_view,HomeView,PersonalView,
                     DinView, login_view,Add_CourseView,
                     TeacherRegisterView,
                     teachers,AssessmentsView,
-                    Course_listVIew
+                    Course_listVIew,
+                    AssessmentListView
                     )
 
 urlpatterns = [
@@ -21,4 +22,5 @@ urlpatterns = [
     path('teachers/',teachers.as_view(), name='teachers'),
     path('assessment/<int:pk>/', AssessmentsView.as_view(), name='assessment'),
     path('course_list/', Course_listVIew.as_view() , name = 'course_list'),
+    path('assessment_list/<int:id>/',AssessmentListView.as_view(), name= 'assessment_list'),
 ]
