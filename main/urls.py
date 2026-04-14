@@ -3,7 +3,8 @@ from .views import (RegisterView ,logout_view,HomeView,PersonalView,
                     ContactAddressView,EmergencyContactView ,
                     DinView, login_view,Add_CourseView,
                     TeacherRegisterView,
-                    teachers,AssessmentsView
+                    teachers,AssessmentsView,
+                    Course_listVIew
                     )
 
 urlpatterns = [
@@ -19,6 +20,5 @@ urlpatterns = [
     path('logout/',logout_view,name='logout'),
     path('teachers/',teachers.as_view(), name='teachers'),
     path('assessment/<int:pk>/', AssessmentsView.as_view(), name='assessment'),
-
-
+    path('course_list/', Course_listVIew.as_view() , name = 'course_list'),
 ]

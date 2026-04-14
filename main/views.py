@@ -38,6 +38,14 @@ def login_view(request):
 @method_decorator(login_required(login_url='/logins/'), name='dispatch')
 class HomeView(TemplateView):
     template_name = 'main/home.html'
+class Course_listVIew(ListView):
+    model = Course
+    context_object_name = 'courses'
+    template_name = 'main/subjects_list.html'
+    def get_queryset(self):
+        return Course.objects.filter(student = self.request.user)
+    
+
 class teachers(ListView):
     model = CustomUserModel
     context_object_name = 'students'
