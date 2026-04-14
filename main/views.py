@@ -49,7 +49,7 @@ class AssessmentListView(ListView):
     context_object_name = 'assessments'
     template_name = 'main/student_assessments_list.html'
     def get_queryset(self):
-        coursE = Course.objects.filter(student = self.request.user , id = self.kwargs['pk'])
+        coursE = Course.objects.get(student = self.request.user , id = self.kwargs['id'])
         return Assessment.objects.filter(course = coursE)
     
 
