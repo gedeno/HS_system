@@ -36,7 +36,11 @@ def login_view(request):
                 return redirect('home')
     return render(request, 'main/login.html')
 @method_decorator(login_required(login_url='/logins/'), name='dispatch')
-class HomeView(TemplateView):
+class HomeView(ListView):
+    model = Personal
+    context_object_name = 'personal'
+    def get_queryset(self):
+        return Personal.objects.filter(user = self.request.user)
     template_name = 'main/home.html'
 class Course_listVIew(ListView):
     model = Course

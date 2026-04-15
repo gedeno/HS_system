@@ -7,10 +7,13 @@
 </head>
 <body>
     <h1>well come home page</h1>
-    <button type="submit"><a href="{% url 'personal' %}">Personal</a></button>
-    <button type="submit"><a href="{% url 'contactaddress' %}">contact address</a></button>
-    <button type="submit"><a href="{% url 'emergencycontact' %}"> emergency contact</a></button>
-    <button><a href="{% url 'course_list' %}">assessment results</a></button>
+    <h1>{{personal.name}}</h1>
+    <button type="submit"><a href="{% url 'personal' %}">Personal</a></button><br>
+    <button type="submit"><a href="{% url 'contactaddress' %}">contact address</a></button><br>
+    <button type="submit"><a href="{% url 'emergencycontact' %}"> emergency contact</a></button><br>
+    <button><a href="{% url 'course_list' %}">assessment results</a></button><br>
     <button><a href="{% url 'logout' %}">logout</a></button>
+    <h1>{{personal.name}}</h1>
+
 </body>
 </html>
