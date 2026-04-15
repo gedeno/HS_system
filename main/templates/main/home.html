@@ -4,16 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        img{
+            height: 80px;
+            width: 80px;
+            border-radius: 40px;
+        }
+        .div2{
+            width: 300px;
+            height: 1150px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            padding: 10px;
+            background-color: rgb(19, 86, 174);
+        }
+        .div1{
+            width: 200px;
+            height: 800px;
+            position: relative;
+            left: 400px;
+
+            background-color: #5623b3;
+        }
+        a{
+            width: 280px;
+            height: 50px;
+            font-size: 30px;
+            display: block;
+            text-decoration: none;
+            position: relative;
+            top: auto;
+            left: 0px;
+            box-shadow: black;
+        }
+    </style>
 </head>
 <body>
-    <h1>well come home page</h1>
-    <h1>{{personal.name}}</h1>
-    <button type="submit"><a href="{% url 'personal' %}">Personal</a></button><br>
-    <button type="submit"><a href="{% url 'contactaddress' %}">contact address</a></button><br>
-    <button type="submit"><a href="{% url 'emergencycontact' %}"> emergency contact</a></button><br>
-    <button><a href="{% url 'course_list' %}">assessment results</a></button><br>
-    <button><a href="{% url 'logout' %}">logout</a></button>
-    <h1>{{personal.name}}</h1>
+    <div class="div1">
+        <img src="{{ personal.profile_picture.url }}" alt="">
+        <h1>{{personal.name}}</h1>
+        <h2>{{personal.father_name}}</h2>
+        <h2>{{personal.grandfather_name}}</h2>
+        <h2>{{personal.gender}}</h2>
+        <h2>{{personal.disability}}</h2>
+        <h2>{{personal.date_of_birth}}</h2>
+        <h2>{{personal.date_of_birth}}</h2>
+        <h2>{{personal.place_of_birth}}</h2>
+        <h2>{{personal.nationality}}</h2>
+        <h2>{{personal.region}}</h2>
+        <h2>{{personal.marital_status}}</h2>
+    </div>
+    
+    <div class="div2">
+        <button type="submit" class="but1"><a href="{% url 'personal' %}">Personal</a></button><br>
+        <button type="submit" class="but1"><a href="{% url 'contactaddress' %}">contact address</a></button><br>
+        <button type="submit" class="but1"><a href="{% url 'emergencycontact' %}"> emergency contact</a></button><br>
+        <button class="but1"><a href="{% url 'course_list' %}">assessment results</a></button><br>
+        <button class="but1"><a href="{% url 'logout' %}">logout</a></button>
+    </div>
+    
 
 </body>
 </html>
+
+
+
+
+
