@@ -7,6 +7,20 @@ class TeacherCreationForm(UserCreationForm):
     class Meta:
         model = CustomUserModel
         fields = ['username', 'subject', 'password1', 'password2']
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder': "Enter Usernafsdfsdfme..."
+            }),
+            'password1': forms.PasswordInput(attrs={
+                'class':'form-control',
+                'placeholder': "Enter Password..."
+            }),
+            'password2': forms.PasswordInput(attrs={
+                'class':'form-control',
+                'placeholder': "Confirm Password..."
+            })
+        }
 
     def save(self, commit = True):
         user = super().save(commit=False)
@@ -18,20 +32,25 @@ class TeacherCreationForm(UserCreationForm):
         return user
     
 class StudentCreationForm(UserCreationForm):
-    username = forms.CharField(
-        widget=forms.TextInput(attrs={'class':'form-control'})
-    )
-    password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class':'form-control'})
-    )
-    password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class':'form-control'})
-    )
 
+    
     class Meta:
         model = CustomUserModel
         fields = ['username', 'password1', 'password2']
-
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder': "Enter Username..."
+            }),
+            'password1': forms.PasswordInput(attrs={
+                'class':'form-control',
+                'placeholder': "Enter Password..."
+            }),
+            'password2': forms.PasswordInput(attrs={
+                'class':'form-control',
+                'placeholder': "Confirm Password..."
+            })
+        }
 
     def save(self, commit=True):
         user = super().save(commit=False)

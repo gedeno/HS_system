@@ -46,12 +46,7 @@
     <h1 class="top-name">well come to register page </h1>
     <form action="" method="post" class="form">
         {% csrf_token %}
-        <label for="">username:</label>
-        {{form.username}} <br>
-        <label for="">password:</label>
-        {{form.password1}} <br>
-        <label for="">conf.password</label>
-        {{form.password2}}
+        {{form.as_p}}
         <button type="submit">register</button>
         <button><a href="{% url 'logins' %}">go tologin</a></button>
     </form>
