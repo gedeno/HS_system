@@ -4,17 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{
+            background-color: rgb(35, 56, 110);
+        }
+        .head{
+            position: relative;
+            text-align: center;
+            color: white;
+            font-size: 50px;
+            top: 390px;
+            text-shadow: 5px 5px 50px black;
+        }
+        .form{ 
+            width: 500px;
+            height: 300px;
+            background: rgb(15, 72, 100);
+            border-radius: 5%;
+            padding: 40px;
+           position: relative;
+           left: 860px;
+           top: 400px;
+           box-shadow: 5px 5px 50px rgb(0, 0, 0) ;
+        }
+        .user{
+            color: white;
+            font-size: 40px;
+           
+        }
+        .userfill{
+            width: 250px;
+            height: 25px;
+        }
+         .pass{
+            color: white;
+            font-size: 40px;
+             position: relative;
+            top: 30px;
+        }
+        .passfill{
+            width: 250px;
+            height: 25px;
+             position: relative;
+            top: 30px;
+        }
+        .butt{
+            width: 100px;
+            height: 40px;
+            font-size: 30px ;
+            position: relative;
+            top: 130px;
+        }
+        .butt2{
+            width: 120px;
+            height: 40px;
+            font-size: 30px ;
+            padding: auto;
+            position: relative;
+            left: 350px;
+            top: 100px;
+        }
+
+    </style>
 </head>
 <body>
-    <h1 style="text-align: center;">well come to login page </h1>
-    <form action="" method="post">
+    <h1 class="head">login page </h1>
+    <form action="" method="post" class="form">
         {% csrf_token %}
-        <label for="">username:</label>
-        <input type="text" name="username" id="" placeholder="username"><br>
-        <label for="">password:</label>
-        <input type="password" name="password" id="" placeholder="password"><br>
-        <button type="submit">login</button><br>
-        <a href="{% url 'register' %}"> go to register page </a>
+        <label for="" class="user">username:</label>
+        <input class="userfill" type="text" name="username" id="" placeholder="username"><br>
+        <label for="" class="pass">password:</label>
+        <input class="passfill" type="password" name="password" id="" placeholder="password"><br>
+        <button class="butt" type="submit">login</button><br>
+        
+        <button class="butt2"><a href="{% url 'register' %}">sign up</a></button>
     </form>
 </body>
 </html>

@@ -11,17 +11,35 @@
             background: rgb(15, 72, 100);
             border-radius: 5%;
             padding: 20px;
-            margin: 400px;
+           position: relative;
+           left: 860px;
+           top: 400px;
+            
         }
+        .form-control{
+            width: 100%;
+            height: 30px;
+            border-radius: 5px;
+        }
+        .top-name{
+            text-align: center;
+            color: rgb(15, 72, 100);
+            position: relative;
+            top: 380px;
+
+        
+        }
+        
      
     </style>
 </head>
 <body>
-    <h1 style="text-align: center;">well come to register page </h1>
+    <h1 class="top-name">well come to register page </h1>
     <form action="" method="post" class="form">
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">register</button>
+        <button><a href="{% url 'logins' %}">go tologin</a></button>
     </form>
 </body>
 </html>
