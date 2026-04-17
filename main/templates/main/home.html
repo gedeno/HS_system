@@ -6,24 +6,29 @@
     <title>Document</title>
     <style>
         img{
-            height: 80px;
-            width: 80px;
-            border-radius: 40px;
+            height: 480px;
+            width: 480px;
+            border-radius: 10px;
         }
         .div2{
             width: 300px;
             height: 1150px;
             position: absolute;
-            top: 0px;
+            top: 50px;
             left: 0px;
             padding: 10px;
             background-color: rgb(19, 86, 174);
         }
         .div1{
-            width: 200px;
-            height: 800px;
+            width: 800px;
+            height: 1171px;
             position: relative;
-            left: 400px;
+            left: 313px;
+            top: -22px;
+            padding: 30px;
+            padding-top: 70px;
+            color: white;
+           
 
             background-color: #5623b3;
         }
@@ -38,22 +43,28 @@
             left: 0px;
             box-shadow: black;
         }
+        .divs{
+            width: 1300px;
+            height: 50px;
+            position: relative;
+            background-color: rgb(42, 42, 96);
+            top: -21px;
+            left: -8px;
+        }
     </style>
 </head>
 <body>
+    <div class="divs"><h1>WELL COME TO YOUR PORTAL</h1></div>
     <div class="div1">
         <img src="{{ personal.profile_picture.url }}" alt="">
-        <h1>{{personal.name}}</h1>
-        <h2>{{personal.father_name}}</h2>
-        <h2>{{personal.grandfather_name}}</h2>
-        <h2>{{personal.gender}}</h2>
-        <h2>{{personal.disability}}</h2>
-        <h2>{{personal.date_of_birth}}</h2>
-        <h2>{{personal.date_of_birth}}</h2>
-        <h2>{{personal.place_of_birth}}</h2>
-        <h2>{{personal.nationality}}</h2>
-        <h2>{{personal.region}}</h2>
-        <h2>{{personal.marital_status}}</h2>
+        <h1>Full name : {{personal.name}} {{personal.father_name}} {{personal.grandfather_name}} </h1>
+        <h1>Gender: {{personal.gender}}</h1>
+        <h1>Disablity: {{personal.disability}}</h1>
+        <h1>Date of birth: {{personal.date_of_birth}}</h1>
+        <h1>Place of birth: {{personal.place_of_birth}}</h1>
+        <h1>Nationality: {{personal.nationality}}</h1>
+        <h1>Region: {{personal.region}}</h1>
+        <h1>Marital_status: {{personal.marital_status}}</h1>
     </div>
     
     <div class="div2">
