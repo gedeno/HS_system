@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Personal Information</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/personal.css' %}">
 </head>
 <body>
-    <h1 style="text-align: center;">well come to personal page </h1>
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">save</button>
-    </form>
-</body>
+    <div class="container">
+        <h1>Welcome to Personal Page</h1>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Save</button>
+        </form>
+    </div>
 </body>
 </html>
