@@ -3,79 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        img{
-            height: 480px;
-            width: 480px;
-            border-radius: 10px;
-        }
-        .div2{
-            width: 300px;
-            height: 1070px;
-            position: absolute;
-            top: 50px;
-            left: 0px;
-            padding: 10px;
-            background-color: rgb(19, 86, 174);
-        }
-        .div1{
-            width: 800px;
-            height: 990px;
-            position: relative;
-            left: 313px;
-            top: -22px;
-            padding: 30px;
-            padding-top: 70px;
-            color: white;
-           
-
-            background-color: #5623b3;
-        }
-        a{
-            width: 280px;
-            height: 50px;
-            font-size: 30px;
-            display: block;
-            text-decoration: none;
-            position: relative;
-            top: auto;
-            left: 0px;
-            box-shadow: black;
-        }
-        .divs{
-            width: 1300px;
-            height: 50px;
-            position: relative;
-            background-color: rgb(42, 42, 96);
-            top: -21px;
-            left: -8px;
-        }
-    </style>
+    <title>Student Portal Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/base.css' %}">
 </head>
 <body>
-    <div class="divs"><h1>WELL COME TO YOUR PORTAL</h1></div>
-    <div class="div1">
-        <img src="{{ personal.profile_picture.url }}" alt="">
-        <h1>Full name : {{personal.name}} {{personal.father_name}} {{personal.grandfather_name}} </h1>
-        <h1>Gender: {{personal.gender}}</h1>
-        <h1>Disablity: {{personal.disability}}</h1>
-        <h1>Date of birth: {{personal.date_of_birth}}</h1>
-        <h1>Place of birth: {{personal.place_of_birth}}</h1>
-        <h1>Nationality: {{personal.nationality}}</h1>
-        <h1>Region: {{personal.region}}</h1>
-        <h1>Marital_status: {{personal.marital_status}}</h1>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2>Navigation</h2>
+            <button onclick="window.location.href='{% url 'personal' %}'">Personal Information</button>
+            <button onclick="window.location.href='{% url 'contactaddress' %}'">Contact Address</button>
+            <button onclick="window.location.href='{% url 'emergencycontact' %}'">Emergency Contact</button>
+            <button onclick="window.location.href='{% url 'course_list' %}'">Assessment Results</button>
+            <button onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+        </div>
+        <div class="main-content">
+            <h1>Welcome to Your Student Portal</h1>
+            <div class="profile-card">
+                {% if personal.profile_picture %}
+                    <img src="{{ personal.profile_picture.url }}" alt="Profile Picture">
+                {% endif %}
+                <div class="profile-info">
+                    <h1>{{ personal.name }} {{ personal.father_name }} {{ personal.grandfather_name }}</h1>
+                    <p><strong>Gender:</strong> {{ personal.gender }}</p>
+                    <p><strong>Disability:</strong> {{ personal.disability }}</p>
+                    <p><strong>Date of Birth:</strong> {{ personal.date_of_birth }}</p>
+                    <p><strong>Place of Birth:</strong> {{ personal.place_of_birth }}</p>
+                    <p><strong>Nationality:</strong> {{ personal.nationality }}</p>
+                    <p><strong>Region:</strong> {{ personal.region }}</p>
+                    <p><strong>Marital Status:</strong> {{ personal.marital_status }}</p>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div class="div2">
-        <button type="submit" class="but1"><a href="{% url 'personal' %}">Personal</a></button><br>
-        <button type="submit" class="but1"><a href="{% url 'contactaddress' %}">contact address</a></button><br>
-        <button type="submit" class="but1"><a href="{% url 'emergencycontact' %}"> emergency contact</a></button><br>
-        <button class="but1"><a href="{% url 'course_list' %}">assessment results</a></button><br>
-        <button class="but1"><a href="{% url 'logout' %}">logout</a></button>
-    </div>
-    
-
 </body>
 </html>
 

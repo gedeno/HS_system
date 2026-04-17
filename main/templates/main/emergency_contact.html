@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Emergency Contact Information</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/emergency_contact.css' %}">
 </head>
 <body>
-    <h1 style="text-align: center;">well come to personal page </h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">save</button>
+    <div class="container">
+        <h1>Emergency Contact Information</h1>
+        <div class="alert-info">
+            <strong>Important:</strong> Please provide accurate emergency contact details. This information will be used in case of emergencies and should be kept up to date.
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Save Emergency Contact</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Teacher Dashboard - Student Portal</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/base.css' %}">
 </head>
 <body>
-    <form action="">
-        <h1>well come to teachers page</h1>
-        <a href="{% url 'logout' %}">logout</a>
-        {% for student in students %}
-        <hr>
-            <a href="{% url 'assessment' student.id %}">{{ student.username}}</a><hr>
-        {% endfor %}
-    </form>
+    <div class="container">
+        <h1>Teacher Dashboard</h1>
+        <p>Welcome to the teachers page. Here you can access student assessments.</p>
+
+        <div style="text-align: center; margin-bottom: 30px;">
+            <a href="{% url 'logout' %}" style="display: inline-block; padding: 10px 20px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px;">Logout</a>
+        </div>
+
+        <h2>Student List</h2>
+        <div class="student-list">
+            {% for student in students %}
+                <div class="student-card">
+                    <a href="{% url 'assessment' student.id %}">{{ student.username }}</a>
+                </div>
+            {% empty %}
+                <p>No students available for assessment.</p>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>

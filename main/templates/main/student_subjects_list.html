@@ -3,14 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Your Subjects - Student Portal</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/base.css' %}">
 </head>
 <body>
-    <h1>Subjects list </h1>
-    {% for course in courses %}
-        <a href="{% url 'assessment_list' course.id %}">{{ course.course_name}}</a>
-    {% endfor %}
-    <a href="{% url 'home' %}">back to home</a>
-    
+    <div class="container">
+        <h1>Your Enrolled Subjects</h1>
+        <p>Click on a subject to view your assessment results.</p>
+
+        <div class="student-list">
+            {% for course in courses %}
+                <div class="student-card">
+                    <a href="{% url 'assessment_list' course.id %}">{{ course.course_name }}</a>
+                </div>
+            {% empty %}
+                <p>No subjects enrolled yet.</p>
+            {% endfor %}
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{% url 'home' %}" style="display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">← Back to Home</a>
+        </div>
+    </div>
 </body>
 </html>

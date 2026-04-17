@@ -3,14 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Teacher Registration - Student Portal</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/base.css' %}">
+    <style>
+        ul { display: none; }
+        .helptext { display: none; }
+    </style>
 </head>
 <body>
-    <h1 style="text-align: center;">well come to register page </h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">register</button>
-    </form>
+    <div class="register-container">
+        <div class="register-form">
+            <h1>Teacher Registration</h1>
+            <p>Create your teacher account to access the portal.</p>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit">Register as Teacher</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

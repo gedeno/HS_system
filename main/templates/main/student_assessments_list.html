@@ -3,18 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Assessment Results - Student Portal</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/base.css' %}">
 </head>
 <body>
-    <h1>Student Assessments</h1>
-    {% for assessment in assessments %}
-        <h3>{{ assessment.quiz1}}</h3>
-        <h3>{{assessment.quiz2}}</h3>
-        <h3>{{assessment.assignment1}}</h3>
-        <h3>{{assessment.assignment2}}</h3>
-        <h3>{{assessment.mid_exam}}</h3>
-        <h3>{{assessment.final_exam}}</h3>
+    <div class="container">
+        <h1>Your Assessment Results</h1>
+        <p>Here are your grades for this course.</p>
+
+        {% for assessment in assessments %}
+            <div class="profile-card" style="margin-bottom: 20px;">
+                <h2>Assessment Details</h2>
+                <div class="profile-info">
+                    <p><strong>Quiz 1:</strong> {{ assessment.quiz1 }}</p>
+                    <p><strong>Quiz 2:</strong> {{ assessment.quiz2 }}</p>
+                    <p><strong>Assignment 1:</strong> {{ assessment.assignment1 }}</p>
+                    <p><strong>Assignment 2:</strong> {{ assessment.assignment2 }}</p>
+                    <p><strong>Mid Exam:</strong> {{ assessment.mid_exam }}</p>
+                    <p><strong>Final Exam:</strong> {{ assessment.final_exam }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p>No assessment results available yet.</p>
         {% endfor %}
-    <a href="{% url 'course_list' %}">back to subjects list</a>    
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{% url 'course_list' %}" style="display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">← Back to Subjects List</a>
+        </div>
+    </div>
 </body>
 </html>

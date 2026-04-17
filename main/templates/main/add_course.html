@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Course - Student Portal</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/base.css' %}">
 </head>
 <body>
-    
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">save</button>
-    </form>
+    <div class="container">
+        <h1>Add New Course</h1>
+        <p>Enter the details for the new course you want to add.</p>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Add Course</button>
+        </form>
+    </div>
 </body>
 </html>
