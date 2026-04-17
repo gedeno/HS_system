@@ -66,8 +66,8 @@ class teachers(ListView):
     template_name = 'main/teachers.html'
 
     def get_queryset(self):
-        course = Course.objects.get(teacher=self.request.user)
-        return course.student.all()
+        course = Course.objects.filter(teacher=self.request.user)
+        return CustomUserModel.objects.filter(is_student=True)
 class AssessmentsView(UpdateView):
     model = Assessment
     form_class = AssessmentForm
@@ -79,7 +79,7 @@ class AssessmentsView(UpdateView):
         form.save()
         return redirect('teachers')
     def get_object(self, queryset = ...):
-        course = Course.objects.get(teacher=self.request.user)
+        course = Course.objects.filter(teacher=self.request.user)[0]
         student = CustomUserModel.objects.get(id=self.kwargs['pk'])
         ass = Assessment.objects.get(course=course, student=student)
         return ass
@@ -118,7 +118,7 @@ class DinView(ListView):
     context_object_name = 'students'
     template_name = 'main/Din.html'
     def get_queryset(self):
-        return CustomUserModel.objects.filter(is_superuser=False)
+        return CustomUserModel.objects.filter(is_superuser=False , is_teacher = False)
 
 class Add_CourseView(CreateView):
     model = Course
