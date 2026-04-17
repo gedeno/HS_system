@@ -63,7 +63,7 @@ class Emergency_contact(models.Model):
 
 class Course(models.Model):
     course_name = models.CharField(max_length=200, choices=COURSE_CHOICES)
-    teacher = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE , related_name='courses')
+    teacher = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE , related_name='courses')
     student = models.ManyToManyField(CustomUserModel)
 
 class Assessment(models.Model):
