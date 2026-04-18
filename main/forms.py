@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Personal, Contact_address, Emergency_contact, Course, Assessment, CustomUserModel
+from .models import Personal, Contact_address, Emergency_contact, Course, Assessment, CustomUserModel , Sections
 from django.contrib.auth.forms import UserCreationForm
 
 class TeacherCreationForm(UserCreationForm):
@@ -30,13 +30,14 @@ class TeacherCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-    
+
+'''   
 class StudentCreationForm(UserCreationForm):
 
     
     class Meta:
         model = CustomUserModel
-        fields = ['username','grade','password1', 'password2']
+        fields = ['username', 'password1', 'password2']
         widgets = {
             'username': forms.TextInput(attrs={
                 'class':'form-control',
@@ -59,9 +60,31 @@ class StudentCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-    
+'''
+class SectionsForm(ModelForm):
+    teachers = forms.ModelChoiceField(queryset=CustomUserModel.objects.filter(is_teacher = True))
+    students = forms.ModelMultipleChoiceField(
+        queryset=CustomUserModel.objects.filter(is_student = True),
+        widget=forms.SelectMultiple() # Default browser multi-select
+    )
+    class Meta:
+        model = Sections
+        fields = ['Grade','section','teachers', 'students']
 
-    
+class StudentCreationForm(UserCreationForm):
+    class Meta:
+        model = CustomUserModel
+        fields = ['username','grade', 'password1', 'password2']
+
+    def save(self, commit = True):
+        user = super().save(commit=False)
+        user.username = self.cleaned_data['username']
+        user.grade = self.cleaned_data['grade']
+        user.is_student = True
+        if commit:
+            user.save()
+        return user
+
 class PersonalForm(ModelForm):
     class Meta:
         model = Personal

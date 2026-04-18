@@ -15,7 +15,7 @@
         <div class="student-list">
             {% for course in courses %}
                 <div class="student-card">
-                    <a href="{% url 'assessment_list' course.id %}">{{ course.course_name }}</a>
+                    <a href="{% url 'assessment_list' course.course.id %}">{{ course.course.course_name }}</a>
                 </div>
             {% empty %}
                 <p>No subjects enrolled yet.</p>

@@ -6,8 +6,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import Personal, Contact_address, Emergency_contact, Course, Assessment ,CustomUserModel
-from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, CourseForm, AssessmentForm, TeacherCreationForm,StudentCreationForm
+from .models import Personal, Contact_address, Emergency_contact, Course, Assessment ,CustomUserModel, Sections
+from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, CourseForm, AssessmentForm, TeacherCreationForm,StudentCreationForm, SectionsForm
 
 # Create your views here.
 class RegisterView(CreateView):
@@ -50,14 +50,15 @@ class Course_listVIew(ListView):
     context_object_name = 'courses'
     template_name = 'main/student_subjects_list.html'
     def get_queryset(self):
-        return Course.objects.filter(student = self.request.user)
+        return Assessment.objects.filter(student = self.request.user)
+
 class AssessmentListView(ListView):
     model = Assessment
-    context_object_name = 'assessments'
+    context_object_name = 'assessment'
     template_name = 'main/student_assessments_list.html'
     def get_queryset(self):
-        coursE = Course.objects.get(student = self.request.user , id = self.kwargs['id'])
-        return Assessment.objects.filter(course = coursE)
+        course = Course.objects.get(id = self.kwargs['id'])
+        return Assessment.objects.get(course = course, student=self.request.user)
     
 
 class teachers(ListView):
@@ -113,12 +114,27 @@ class EmergencyContactView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user # Link the user here
         return super().form_valid(form)
-class DinView(ListView):
-    model = CustomUserModel
-    context_object_name = 'students'
+class DinView(CreateView):
+    model = Sections
+    form_class = SectionsForm
     template_name = 'main/Din.html'
-    def get_queryset(self):
-        return CustomUserModel.objects.filter(is_superuser=False , is_teacher = False)
+    success_url = '/Din/'
+
+# {'Grade': '12', 'section': 'B', 'teachers': <CustomUserModel: ashu>, 'students': <CustomUserModel: gedish>}
+
+    def form_valid(self, form):
+        course = Course(course_name = form.cleaned_data['teachers'].subject, teacher = form.cleaned_data['teachers'])
+        course.save()
+        students = form.cleaned_data['students']
+        try:
+            for student in students:
+                print(student)
+                ass = Assessment(course=course, student=student)
+                ass.save()
+        except TypeError:
+            ass = Assessment(course=course, student=students)
+        return super().form_valid(form)
+
 
 class Add_CourseView(CreateView):
     model = Course

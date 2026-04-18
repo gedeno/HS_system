@@ -20,7 +20,7 @@ GRADE_CHOICES = (
 )
 class CustomUserModel(AbstractUser):
     subject = models.CharField(max_length=40, null=True, blank=True, choices=COURSE_CHOICES)
-    grade = models.CharField(max_length=40, choices=GRADE_CHOICES)
+    grade = models.CharField(max_length=40, choices=GRADE_CHOICES, blank=True, null=True)
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
 
@@ -70,10 +70,18 @@ class Emergency_contact(models.Model):
     user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE, related_name='emergency_contact')
 
 class Sections(models.Model):
-    Grade = models.CharField(max_length=200 , choices=GRADE_CHOICES)
+    Grade = models.CharField(max_length=200 , choices=GRADE_CHOICES, unique=True)
     section = models.CharField(max_length=200)
-    teacher = models.ManyToManyField(CustomUserModel)
-    student = models.ManyToManyField(CustomUserModel)
+    teacher = models.ManyToManyField(CustomUserModel, related_name='teachers')
+    student = models.ManyToManyField(CustomUserModel, related_name='students')
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['section','Grade'],
+                name='unique_section_variant'
+            )
+        ]
 
 class Course(models.Model):
     course_name = models.CharField(max_length=200, choices=COURSE_CHOICES)

@@ -12,7 +12,6 @@
         <h1>Your Assessment Results</h1>
         <p>Here are your grades for this course.</p>
 
-        {% for assessment in assessments %}
             <div class="profile-card" style="margin-bottom: 20px;">
                 <h2>Assessment Details</h2>
                 <div class="profile-info">
@@ -24,9 +23,7 @@
                     <p><strong>Final Exam:</strong> {{ assessment.final_exam }}</p>
                 </div>
             </div>
-        {% empty %}
-            <p>No assessment results available yet.</p>
-        {% endfor %}
+
 
         <div style="text-align: center; margin-top: 30px;">
             <a href="{% url 'course_list' %}" style="display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">← Back to Subjects List</a>

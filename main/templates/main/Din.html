@@ -3,28 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Management - Teacher Portal</title>
+    <title>Register - Student Portal</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'main/base.css' %}">
+    <style>
+        ul { display: none; }
+        .helptext { display: none; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Course Management</h1>
-        <p>Select a student to add courses for assessment.</p>
-
-        <div style="text-align: center; margin-bottom: 30px;">
-            <a href="{% url 'logout' %}" style="display: inline-block; padding: 10px 20px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px;">Logout</a>
-        </div>
-
-        <h2>Student List</h2>
-        <div class="student-list">
-            {% for student in students %}
-                <div class="student-card">
-                    <a href="{% url 'add_course' student.id %}">{{ student.username }}</a>
-                </div>
-            {% empty %}
-                <p>No students available.</p>
-            {% endfor %}
+    <div class="register-container">
+        <div class="register-form">
+            <h1>Create Section</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit">Create</button>
+            </form>
         </div>
     </div>
 </body>
