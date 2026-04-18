@@ -67,8 +67,8 @@ class teachers(ListView):
     template_name = 'main/teachers.html'
 
     def get_queryset(self):
-        course = Course.objects.get(teacher=self.request.user)
-        return course.student.all()
+        studs = Sections.objects.get(teacher=self.request.user)
+        return studs.student.all()
 class AssessmentsView(UpdateView):
     model = Assessment
     form_class = AssessmentForm
@@ -128,11 +128,12 @@ class DinView(CreateView):
         students = form.cleaned_data['students']
         try:
             for student in students:
-                print(student)
+                #print(student)
                 ass = Assessment(course=course, student=student)
                 ass.save()
         except TypeError:
             ass = Assessment(course=course, student=students)
+        
         return super().form_valid(form)
 
 

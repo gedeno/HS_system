@@ -73,7 +73,6 @@ class Sections(models.Model):
     Grade = models.CharField(max_length=200 , choices=GRADE_CHOICES, unique=True)
     section = models.CharField(max_length=200)
     teacher = models.ManyToManyField(CustomUserModel, related_name='teachers')
-    student = models.ManyToManyField(CustomUserModel, related_name='students')
 
     class Meta:
         constraints = [
