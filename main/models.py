@@ -11,8 +11,16 @@ COURSE_CHOICES = (
     ('Literature', 'Literature'),
     ('Computer Science', 'Computer Science')
 )
+
+GRADE_CHOICES = (
+    ('12','12'),
+    ('11','11'),
+    ('10','10'),
+    ('9','9')
+)
 class CustomUserModel(AbstractUser):
     subject = models.CharField(max_length=40, null=True, blank=True, choices=COURSE_CHOICES)
+    grade = models.CharField(max_length=40, choices=GRADE_CHOICES)
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
 
@@ -61,10 +69,16 @@ class Emergency_contact(models.Model):
     mobile = models.CharField(max_length=200)
     user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE, related_name='emergency_contact')
 
+class Sections(models.Model):
+    Grade = models.CharField(max_length=200 , choices=GRADE_CHOICES)
+    section = models.CharField(max_length=200)
+    teacher = models.ManyToManyField(CustomUserModel)
+    student = models.ManyToManyField(CustomUserModel)
+
 class Course(models.Model):
     course_name = models.CharField(max_length=200, choices=COURSE_CHOICES)
-    teacher = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE , related_name='courses')
-    student = models.ManyToManyField(CustomUserModel)
+    teacher = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE , related_name='courses')
+
 
 class Assessment(models.Model):
     quiz1 = models.IntegerField(default=0)
@@ -73,5 +87,5 @@ class Assessment(models.Model):
     assignment2 = models.IntegerField(default=0)
     mid_exam = models.IntegerField(default=0)
     final_exam = models.IntegerField(default=0)
-    course = models.OneToOneField(Course, on_delete=models.CASCADE , related_name='assessment')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE , related_name='assessment')
     student = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE, related_name='assessments')

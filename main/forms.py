@@ -36,7 +36,7 @@ class StudentCreationForm(UserCreationForm):
     
     class Meta:
         model = CustomUserModel
-        fields = ['username', 'password1', 'password2']
+        fields = ['username','grade','password1', 'password2']
         widgets = {
             'username': forms.TextInput(attrs={
                 'class':'form-control',
@@ -60,18 +60,7 @@ class StudentCreationForm(UserCreationForm):
             user.save()
         return user
     
-class StudentCreationForm(UserCreationForm):
-    class Meta:
-        model = CustomUserModel
-        fields = ['username', 'password1', 'password2']
 
-    def save(self, commit = True):
-        user = super().save(commit=False)
-        user.username = self.cleaned_data['username']
-        user.is_student = True
-        if commit:
-            user.save()
-        return user
     
 class PersonalForm(ModelForm):
     class Meta:
