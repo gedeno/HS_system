@@ -57,9 +57,13 @@ class StudentCreationForm(UserCreationForm):
         return user
     
 class ClassroomForm(ModelForm):
+    teacher = forms.ModelMultipleChoiceField(
+        queryset=CustomUserModel.objects.filter(is_teacher = True),
+        #widget=forms.SelectMultiple() # Default browser multi-select
+    )
     class Meta:
         model = Classroom
-        fields = '__all__'
+        fields = ['Grade','section','teacher']
 
 class SubjectForm(ModelForm):
     class Meta:
@@ -73,7 +77,7 @@ class Classroomstudentform(ModelForm):
     )
     class Meta:
         model = Classroomstudent
-        fields = ['student' , 'classroom']
+        fields = ['students' , 'classroom']
 
 
 class PersonalForm(ModelForm):

@@ -121,7 +121,7 @@ class DinView(CreateView):
     model = Classroom
     form_class = ClassroomForm
     template_name = 'main/Din.html'
-    success_url = '/studadd/'
+    
     def form_valid(self, form):
         form.save()
         return redirect('/studadd/')
@@ -132,7 +132,9 @@ class Din_stud_add(CreateView):
     template_name = 'main/student_add.html'
     success_url = 'subject_add'
     def form_valid(self, form):
-        form.save()
+        students = form.cleaned_data['students']
+        for student in students:
+            Classroomstudent.objects.create(student=student, classroom=form.cleaned_data['classroom'])
         return redirect('/subject_add/')
 
 class Din_subject_add(CreateView):
