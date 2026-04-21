@@ -69,23 +69,18 @@ class Emergency_contact(models.Model):
     mobile = models.CharField(max_length=200)
     user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE, related_name='emergency_contact')
 
-class Sections(models.Model):
+class Classroom(models.Model):
     Grade = models.CharField(max_length=200 , choices=GRADE_CHOICES, unique=True)
     section = models.CharField(max_length=200)
-    teacher = models.ManyToManyField(CustomUserModel, related_name='teachers')
+    teacher = models.ForeignKey(CustomUserModel, related_name='teachers')
+class Classroomstudent(models.Model):
+    student = models.ForeignKey(CustomUserModel,on_delete=models.CASCADE)
+    classroom = models.ForeignKey(Classroom , on_delete=models.CASCADE)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['section','Grade'],
-                name='unique_section_variant'
-            )
-        ]
-
-class Course(models.Model):
-    course_name = models.CharField(max_length=200, choices=COURSE_CHOICES)
+class Subject(models.Model):
+    subject_name = models.CharField(max_length=200, choices=COURSE_CHOICES)
     teacher = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE , related_name='courses')
-
+    classroom = models.ForeignKey(Classroom,on_delete=models.CASCADE)
 
 class Assessment(models.Model):
     quiz1 = models.IntegerField(default=0)
@@ -94,5 +89,5 @@ class Assessment(models.Model):
     assignment2 = models.IntegerField(default=0)
     mid_exam = models.IntegerField(default=0)
     final_exam = models.IntegerField(default=0)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE , related_name='assessment')
+    course = models.ForeignKey(Subject, on_delete=models.CASCADE , related_name='assessment')
     student = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE, related_name='assessments')

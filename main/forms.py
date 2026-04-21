@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Personal, Contact_address, Emergency_contact, Course, Assessment, CustomUserModel , Sections
+from .models import Personal, Contact_address, Emergency_contact, Course, Assessment, CustomUserModel , Subject ,Classroom , Classroomstudent
 from django.contrib.auth.forms import UserCreationForm
 
 class TeacherCreationForm(UserCreationForm):
@@ -30,36 +30,6 @@ class TeacherCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
-'''   
-class StudentCreationForm(UserCreationForm):
-
-    
-    class Meta:
-        model = CustomUserModel
-        fields = ['username', 'password1', 'password2']
-        widgets = {
-            'username': forms.TextInput(attrs={
-                'class':'form-control',
-                'placeholder': "Enter Username..."
-            }),
-            'password1': forms.PasswordInput(attrs={
-                'class':'form-control',
-                'placeholder': "Enter Password..."
-            }),
-            'password2': forms.PasswordInput(attrs={
-                'class':'form-control',
-                'placeholder': "Confirm Password..."
-            })
-        }
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.username = self.cleaned_data['username']
-        user.is_student = True
-        if commit:
-            user.save()
-        return user
 '''
 class SectionsForm(ModelForm):
     teachers = forms.ModelChoiceField(queryset=CustomUserModel.objects.filter(is_teacher = True))
@@ -70,6 +40,7 @@ class SectionsForm(ModelForm):
     class Meta:
         model = Sections
         fields = ['Grade','section','teachers', 'students']
+'''
 
 class StudentCreationForm(UserCreationForm):
     class Meta:
@@ -84,6 +55,26 @@ class StudentCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+    
+class Classroomform(ModelForm):
+    class Meta:
+        model = Classroom
+        fields = '__all__'
+
+class SubjectForm(ModelForm):
+    class Meta:
+        model = Subject
+        fields = '__all__'
+
+class Classroomstudentform(ModelForm):
+    students = forms.ModelMultipleChoiceField(
+        queryset=CustomUserModel.objects.filter(is_student = True),
+        widget=forms.SelectMultiple() # Default browser multi-select
+    )
+    class Meta:
+        model = Classroomstudent
+        fields = ['student' , 'classroom']
+
 
 class PersonalForm(ModelForm):
     class Meta:
