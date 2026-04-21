@@ -52,6 +52,7 @@ class Course_listVIew(ListView):
     def get_queryset(self):
         return Assessment.objects.filter(student = self.request.user)
 
+
 class AssessmentListView(ListView):
     model = Assessment
     context_object_name = 'assessment'
@@ -62,14 +63,14 @@ class AssessmentListView(ListView):
     
 
 class teachers(ListView):
-    model = CustomUserModel
-    context_object_name = 'students'
-    template_name = 'main/teachers.html'
-    '''
+    model = Classroom
+    context_object_name = 'classes'
+    template_name = 'main/section_list.html'
+    
     def get_queryset(self):
-        studs = Sections.objects.get(teacher=self.request.user)
+        studs = Classroom.objects.get(teacher=self.request.user)
         return studs.student.all()
-    '''
+
 class AssessmentsView(UpdateView):
     model = Assessment
     form_class = AssessmentForm
@@ -121,32 +122,26 @@ class DinView(CreateView):
     form_class = ClassroomForm
     template_name = 'main/Din.html'
     success_url = '/stud_add/'
+    def form_valid(self, form):
+        form.save()
+        return redirect('/stud_add/')
 
 class Din_stud_add(CreateView):
     model = Classroomstudent
     form_class = Classroomstudentform
-    template_name = 'main/studadd.html'
+    template_name = 'main/student_add.html'
     success_url = 'subject_add'
-   
+    def form_valid(self, form):
+        form.save()
+        return redirect('/subject_add/')
+
 class Din_subject_add(CreateView):
     model = Subject
     form_class = SubjectForm
     template_name = 'main/subject_add.html'
     success_url = '/Din/'
-    def 
-
-class Add_CourseView(CreateView):
-    model = Course
-    form_class = CourseForm
-    template_name = 'main/add_course.html'
     def form_valid(self, form):
-        course = form.save(commit=False)
-        course.teacher = CustomUserModel.objects.get(subject=course.course_name)
-        course.save()
-        course.student.add(CustomUserModel.objects.get(id=self.kwargs['pk']))
-        ass = Assessment(course=course, student=CustomUserModel.objects.get(id=self.kwargs['pk']))
-        ass.save()
-        return redirect('Din')
+        form.save()
 
 def logout_view(request):
     logout(request)
