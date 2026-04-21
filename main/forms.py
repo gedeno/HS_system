@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Personal, Contact_address, Emergency_contact, Course, Assessment, CustomUserModel , Subject ,Classroom , Classroomstudent
+from .models import Personal, Contact_address, Emergency_contact,  Assessment, CustomUserModel , Subject ,Classroom , Classroomstudent
 from django.contrib.auth.forms import UserCreationForm
 
 class TeacherCreationForm(UserCreationForm):
@@ -56,7 +56,7 @@ class StudentCreationForm(UserCreationForm):
             user.save()
         return user
     
-class Classroomform(ModelForm):
+class ClassroomForm(ModelForm):
     class Meta:
         model = Classroom
         fields = '__all__'
@@ -95,11 +95,6 @@ class EmergencyContactForm(ModelForm):
         model = Emergency_contact
         fields = '__all__'
         exclude = ['user']
-class CourseForm(ModelForm):
-    class Meta:
-        model = Course
-        fields = '__all__'
-        exclude = ['student', 'teacher']
 
 class AssessmentForm(ModelForm):
     class Meta:

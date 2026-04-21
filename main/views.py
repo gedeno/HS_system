@@ -6,7 +6,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import Personal, Contact_address, Emergency_contact, Course, Assessment ,CustomUserModel,Subject ,Classroom , Classroomstudent
+from .models import Personal, Contact_address, Emergency_contact, Assessment ,CustomUserModel,Subject ,Classroom , Classroomstudent
 from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, SubjectForm, AssessmentForm, TeacherCreationForm,StudentCreationForm, ClassroomForm ,Classroomstudentform
 
 # Create your views here.
@@ -62,7 +62,7 @@ class AssessmentListView(ListView):
         return Assessment.objects.get(course = course, student=self.request.user)
     
 
-class teachers(ListView):
+class All_class(ListView):
     model = Classroom
     context_object_name = 'classes'
     template_name = 'main/section_list.html'
@@ -121,10 +121,10 @@ class DinView(CreateView):
     model = Classroom
     form_class = ClassroomForm
     template_name = 'main/Din.html'
-    success_url = '/stud_add/'
+    success_url = '/studadd/'
     def form_valid(self, form):
         form.save()
-        return redirect('/stud_add/')
+        return redirect('/studadd/')
 
 class Din_stud_add(CreateView):
     model = Classroomstudent
@@ -142,6 +142,7 @@ class Din_subject_add(CreateView):
     success_url = '/Din/'
     def form_valid(self, form):
         form.save()
+        return redirect('/Din/')
 
 def logout_view(request):
     logout(request)

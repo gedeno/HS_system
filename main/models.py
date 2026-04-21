@@ -72,7 +72,7 @@ class Emergency_contact(models.Model):
 class Classroom(models.Model):
     Grade = models.CharField(max_length=200 , choices=GRADE_CHOICES, unique=True)
     section = models.CharField(max_length=200)
-    teacher = models.ForeignKey(CustomUserModel, related_name='teachers')
+    teacher = models.ForeignKey(CustomUserModel,on_delete=models.CASCADE, related_name='teachers')
 class Classroomstudent(models.Model):
     student = models.ForeignKey(CustomUserModel,on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom , on_delete=models.CASCADE)
