@@ -6,8 +6,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import Personal, Contact_address, Emergency_contact, Course, Assessment ,CustomUserModel, Sections
-from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, CourseForm, AssessmentForm, TeacherCreationForm,StudentCreationForm, SectionsForm
+from .models import Personal, Contact_address, Emergency_contact, Course, Assessment ,CustomUserModel,Subject ,Classroom , Classroomstudent
+from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, SubjectForm, AssessmentForm, TeacherCreationForm,StudentCreationForm, ClassroomForm ,Classroomstudentform
 
 # Create your views here.
 class RegisterView(CreateView):
@@ -46,7 +46,7 @@ class HomeView(DetailView):
             pass
     template_name = 'main/home.html'
 class Course_listVIew(ListView):
-    model = Course
+    model = Subject
     context_object_name = 'courses'
     template_name = 'main/student_subjects_list.html'
     def get_queryset(self):
@@ -57,7 +57,7 @@ class AssessmentListView(ListView):
     context_object_name = 'assessment'
     template_name = 'main/student_assessments_list.html'
     def get_queryset(self):
-        course = Course.objects.get(id = self.kwargs['id'])
+        course = Subject.objects.get(id = self.kwargs['id'])
         return Assessment.objects.get(course = course, student=self.request.user)
     
 
@@ -65,16 +65,18 @@ class teachers(ListView):
     model = CustomUserModel
     context_object_name = 'students'
     template_name = 'main/teachers.html'
-
+    '''
     def get_queryset(self):
         studs = Sections.objects.get(teacher=self.request.user)
         return studs.student.all()
+    '''
 class AssessmentsView(UpdateView):
     model = Assessment
     form_class = AssessmentForm
     context_object_name = 'assessment'
     template_name = 'main/assessment.html'
     success_url = 'teachers'
+    '''
     
     def form_valid(self, form):
         form.save()
@@ -84,7 +86,7 @@ class AssessmentsView(UpdateView):
         student = CustomUserModel.objects.get(id=self.kwargs['pk'])
         ass = Assessment.objects.get(course=course, student=student)
         return ass
-
+    '''
 
 class PersonalView(CreateView):
     form_class = PersonalForm
@@ -115,27 +117,23 @@ class EmergencyContactView(CreateView):
         form.instance.user = self.request.user # Link the user here
         return super().form_valid(form)
 class DinView(CreateView):
-    model = Sections
-    form_class = SectionsForm
+    model = Classroom
+    form_class = ClassroomForm
     template_name = 'main/Din.html'
+    success_url = '/stud_add/'
+
+class Din_stud_add(CreateView):
+    model = Classroomstudent
+    form_class = Classroomstudentform
+    template_name = 'main/studadd.html'
+    success_url = 'subject_add'
+   
+class Din_subject_add(CreateView):
+    model = Subject
+    form_class = SubjectForm
+    template_name = 'main/subject_add.html'
     success_url = '/Din/'
-
-# {'Grade': '12', 'section': 'B', 'teachers': <CustomUserModel: ashu>, 'students': <CustomUserModel: gedish>}
-
-    def form_valid(self, form):
-        course = Course(course_name = form.cleaned_data['teachers'].subject, teacher = form.cleaned_data['teachers'])
-        course.save()
-        students = form.cleaned_data['students']
-        try:
-            for student in students:
-                #print(student)
-                ass = Assessment(course=course, student=student)
-                ass.save()
-        except TypeError:
-            ass = Assessment(course=course, student=students)
-        
-        return super().form_valid(form)
-
+    def 
 
 class Add_CourseView(CreateView):
     model = Course
