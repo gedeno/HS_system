@@ -31,11 +31,12 @@ def login_view(request):
             if request.user.is_superuser:
                 return redirect('Din')
             elif request.user.is_teacher:
-                return redirect('teachers')
+                return redirect('All_class')
             else:
                 return redirect('home')
     return render(request, 'main/login.html')
 @method_decorator(login_required(login_url='/logins/'), name='dispatch')
+#student view 
 class HomeView(DetailView):
     model = Personal
     context_object_name = 'personal'
@@ -52,7 +53,6 @@ class Course_listVIew(ListView):
     def get_queryset(self):
         return Assessment.objects.filter(student = self.request.user)
 
-
 class AssessmentListView(ListView):
     model = Assessment
     context_object_name = 'assessment'
@@ -61,24 +61,23 @@ class AssessmentListView(ListView):
         course = Subject.objects.get(id = self.kwargs['id'])
         return Assessment.objects.get(course = course, student=self.request.user)
     
-
+#teachers views 
 class All_class(ListView):
     model = Classroom
     context_object_name = 'classes'
     template_name = 'main/section_list.html'
     
     def get_queryset(self):
-        studs = Classroom.objects.get(teacher=self.request.user)
-        return studs.student.all()
-
+        return Classroom.objects.filter(teacher=self.request.user)
+  
 class AssessmentsView(UpdateView):
     model = Assessment
     form_class = AssessmentForm
     context_object_name = 'assessment'
     template_name = 'main/assessment.html'
     success_url = 'teachers'
+
     '''
-    
     def form_valid(self, form):
         form.save()
         return redirect('teachers')
@@ -117,6 +116,7 @@ class EmergencyContactView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user # Link the user here
         return super().form_valid(form)
+#the super user or student din  views
 class DinView(CreateView):
     model = Classroom
     form_class = ClassroomForm
