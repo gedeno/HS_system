@@ -66,16 +66,29 @@ class All_class(ListView):
     model = Classroom
     context_object_name = 'classes'
     template_name = 'main/section_list.html'
-    
     def get_queryset(self):
         return Classroom.objects.filter(teacher=self.request.user)
-  
+
+class All_student(ListView):
+    model = Classroomstudent
+    context_object_name = 'students'
+    template_name = 'main/student_list.html'
+    def get_queryset(self):
+        classes = Classroom.objects.get(id = self.kwargs['pk'])
+        return Classroomstudent.objects.filter(classroom = classes)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['students'] = self.get_queryset()
+        return context
+
+
 class AssessmentsView(UpdateView):
     model = Assessment
     form_class = AssessmentForm
     context_object_name = 'assessment'
     template_name = 'main/assessment.html'
     success_url = 'teachers'
+
 
     '''
     def form_valid(self, form):

@@ -20,7 +20,7 @@
         <div class="student-list">
             {% for student in classes %}
                 <div class="student-card">
-                    <a href="{% url 'assessment' student.id %}">{{ student.Grade }}'{{ student.section }} </a>
+                    <a href="{% url 'All_student' student.id %}">{{ student.Grade }}'{{ student.section }} </a>
                 </div>
             {% empty %}
                 <p>No students available for assessment.</p>
