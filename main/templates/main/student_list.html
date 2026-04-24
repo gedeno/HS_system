@@ -9,7 +9,7 @@
     <div>
         <h1>well come to student list </h1>
         {% for class in students %}
-            <h1>{{class.student.username}}</h1>
+            <a href="{% url 'assessment' class.student.id  %}"> <h1>{{class.student.username}}</h1></a>
         {% endfor %}
     </div>
 </body>

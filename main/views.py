@@ -87,19 +87,20 @@ class AssessmentsView(UpdateView):
     form_class = AssessmentForm
     context_object_name = 'assessment'
     template_name = 'main/assessment.html'
-    success_url = 'teachers'
+    success_url = 'All_class'
 
-
-    '''
     def form_valid(self, form):
         form.save()
-        return redirect('teachers')
+        return redirect('All_class')
     def get_object(self, queryset = ...):
-        course = Course.objects.get(teacher=self.request.user)
+        course = Subject.objects.get(teacher=self.request.user)
         student = CustomUserModel.objects.get(id=self.kwargs['pk'])
-        ass = Assessment.objects.get(course=course, student=student)
-        return ass
-    '''
+        try:
+            assessment = Assessment.objects.get(student=student, course=course)
+        except:
+            assessment = Assessment.objects.create(student=student, course=course)
+        return assessment
+    
 
 class PersonalView(CreateView):
     form_class = PersonalForm
