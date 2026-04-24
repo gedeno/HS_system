@@ -146,12 +146,11 @@ class Din_stud_add(CreateView):
     success_url = 'subject_add'
     def form_valid(self, form):
         students = form.cleaned_data['students']
-        try:
-            for student in students:
-                Classroomstudent.objects.create(student=student, classroom=form.cleaned_data['classroom'])
-            return redirect('/subject_add/')
-        except:
-            pass
+        for student in students:
+            Classroomstudent.objects.create(student=student, classroom=form.cleaned_data['classroom'])
+        return redirect('/subject_add/')
+    
+          
 class Din_subject_add(CreateView):
     model = Subject
     form_class = SubjectForm

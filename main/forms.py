@@ -30,18 +30,6 @@ class TeacherCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-'''
-class SectionsForm(ModelForm):
-    teachers = forms.ModelChoiceField(queryset=CustomUserModel.objects.filter(is_teacher = True))
-    students = forms.ModelMultipleChoiceField(
-        queryset=CustomUserModel.objects.filter(is_student = True),
-        widget=forms.SelectMultiple() # Default browser multi-select
-    )
-    class Meta:
-        model = Sections
-        fields = ['Grade','section','teachers', 'students']
-'''
-
 class StudentCreationForm(UserCreationForm):
     class Meta:
         model = CustomUserModel
@@ -57,7 +45,7 @@ class StudentCreationForm(UserCreationForm):
         return user
     
 class ClassroomForm(ModelForm):
-    teacher = forms.ModelMultipleChoiceField(
+    teacher = forms.ModelChoiceField(
         queryset=CustomUserModel.objects.filter(is_teacher = True),
         #widget=forms.SelectMultiple() # Default browser multi-select
     )
