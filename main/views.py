@@ -134,6 +134,7 @@ class EmergencyContactView(CreateView):
 class DinView(CreateView):
     model = Classroom
     form_class = ClassroomForm
+    context_object_name = "classes"
     template_name = 'main/Din.html'
     
     def form_valid(self, form):
@@ -141,6 +142,11 @@ class DinView(CreateView):
         section.section = str(form.cleaned_data['grade']) + " " + form.cleaned_data['section']
         section.save()
         return redirect('/studadd/')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['classes'] = Classroom.objects.all()
+        return context
 
 class Din_stud_add(CreateView):
     model = Classroomstudent
@@ -152,6 +158,10 @@ class Din_stud_add(CreateView):
         for student in students:
             Classroomstudent.objects.create(student=student, classroom=form.cleaned_data['classroom'])
         return redirect('/subject_add/')
+    def get_queryset(self):
+        return Classroom.objects.all()
+    
+    
     
           
 class Din_subject_add(CreateView):
