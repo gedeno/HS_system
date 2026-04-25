@@ -49,9 +49,11 @@ class ClassroomForm(ModelForm):
         queryset=CustomUserModel.objects.filter(is_teacher = True),
         #widget=forms.SelectMultiple() # Default browser multi-select
     )
+    grade = forms.IntegerField()
+    section = forms.CharField(max_length=2)
     class Meta:
         model = Classroom
-        fields = ['Grade','section','teacher']
+        fields = ['grade','section','teacher']
 
 class SubjectForm(ModelForm):
     class Meta:

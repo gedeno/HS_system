@@ -137,8 +137,9 @@ class DinView(CreateView):
     template_name = 'main/Din.html'
     
     def form_valid(self, form):
-        print(form.cleaned_data)
-        form.save()
+        section = form.save(commit=False)
+        section.section = str(form.cleaned_data['grade']) + " " + form.cleaned_data['section']
+        section.save()
         return redirect('/studadd/')
 
 class Din_stud_add(CreateView):
