@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import Personal, Contact_address, Emergency_contact, Assessment ,CustomUserModel,Subject ,Classroom , Classroomstudent
-from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, SubjectForm, AssessmentForm, TeacherCreationForm,StudentCreationForm, ClassroomForm ,Classroomstudentform
-
+from .forms import PersonalForm, ContactAddressForm, EmergencyContactForm, SubjectForm
+from .forms import AssessmentForm, TeacherCreationForm,StudentCreationForm, ClassroomForm ,Classroomstudentform
 # Create your views here.
 class RegisterView(CreateView):
     form_class = StudentCreationForm
@@ -137,6 +137,7 @@ class DinView(CreateView):
     template_name = 'main/Din.html'
     
     def form_valid(self, form):
+        print(form.cleaned_data)
         form.save()
         return redirect('/studadd/')
 

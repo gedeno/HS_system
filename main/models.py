@@ -70,9 +70,13 @@ class Emergency_contact(models.Model):
     user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE, related_name='emergency_contact')
 
 class Classroom(models.Model):
-    Grade = models.CharField(max_length=200 , choices=GRADE_CHOICES, unique=True)
+    Grade = models.CharField(max_length=200 , choices=GRADE_CHOICES)
     section = models.CharField(max_length=200)
     teacher = models.ForeignKey(CustomUserModel,on_delete=models.CASCADE, related_name='teachers')
+
+    def __str__(self):
+        return f"{self.Grade} {self.section}"
+
 class Classroomstudent(models.Model):
     student = models.ForeignKey(CustomUserModel,on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom , on_delete=models.CASCADE)
