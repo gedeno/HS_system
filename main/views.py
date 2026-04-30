@@ -175,4 +175,4 @@ class Din_subject_add(CreateView):
 
 def logout_view(request):
     logout(request)
-    return redirect('logins')
+    return redirect('logins') 
